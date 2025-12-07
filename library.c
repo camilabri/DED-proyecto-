@@ -3,6 +3,23 @@
 #include <stdio.h>
 #include <string.h>
 
+//Revelar la estructura del mapa para poder imprimirlos (mostrarUsuarios y mostrarLibros)   
+struct node_str {
+    void * key, * value;
+    struct node_str * next;
+  };
+  
+typedef struct node_str node;
+  
+  struct map_str {
+    hash_func hash;
+    equals_func key_equals;
+    int M, size;
+    node ** hashTable;
+  };
+
+//
+
 struct system_str{
     map *mapaLibros;
     map *mapaUsuarios;
@@ -87,12 +104,46 @@ boolean devolverLibro(sistema * s){
 //marcar como disponible
 //Si hay gente esperando, prestar al siguiente de la cola
 }
+
+void mostrarContenido(map *mapa, int tipo) {
+    for (int i = 0; i < mapa->M; i++) {
+        node *n = mapa->hashTable[i];
+
+        while (n != NULL) { //Lista ligada
+            
+            if (tipo == 1) { //LIBROS
+                book *b= (book*) n->value;
+                printf("ID: %d\n", b->id);
+                printf("Titulo: %s\n", b->titulo);
+                printf("Autor: %s\n", b->autor);
+                printf("Disponible: %s\n", b->disponible ? "Disponible":"Rentado");
+                printf("Demanda: %d\n", b->demanda);
+                printf("----------------------------\n");
+            }
+
+            else if (tipo == 2) { //USUARIOS
+                user *u = (user*) n->value;
+                printf("ID: %d\n", u->id);
+                printf("Nombre: %s\n", u->nombre);
+                printf("Cantidad de libros prestados: %d\n", queue_size(u->librosPrestados));
+                printf("-----------------------------\n");
+            }
+            n = n->next;
+        }
+    }
+}
+
 void mostrarLibros (sistema * s){
-//Recorrer el mapa e imprimirlos
+    printf("\n--- LIBROS ---\n");
+    mostrarContenido(s->mapaLibros, 1);
 }
+
 void mostrarUsuarios(sistema * s){
-//Recorrer el mapa e imprimirlos
+    printf("\n--- USUARIOS ---\n");
+    mostrarContenido(s->mapaUsuarios, 2);
 }
+
+
 void mostrarTopLibros (sistema * s){
 //Pasar todos los libros a una priority queue
 //comparar por demanda
