@@ -145,7 +145,27 @@ void mostrarUsuarios(sistema * s){
 
 
 void mostrarTopLibros (sistema * s){
-//Pasar todos los libros a una priority queue
-//comparar por demanda
-//mostrar top 5 o los q sean
+    int buckets = s->mapaLibros->M;
+    pq* topLibros = pq_create(500,compareLibro);
+    for(int i=0; i<buckets; i++){
+        node* n = s->mapaLibros->hashTable[i]; //obtenemos lista ligada de nodos en ese bucket
+        while(n){ //recorremos lista x lista hasta que no haya más nodos
+            book* libro = (book*)n->value; //casteamos a libro
+            pq_offer(topLibros,libro);
+            n = n->next;
+        }
+    }
+
+    //para hacer top 5
+    int cantidad = pq_size(topLibros)>=5? 5 : pq_size(topLibros); //si son más o igual a 5 hacemos top 5, si son menos hacemos los que hayan
+    printf("\n--- TOP %d LIBROS ---\n", cantidad); 
+    for(int i=0; i<cantidad; i++){
+        book* libro = (book*)pq_poll(topLibros);
+        printf("  %d - \"%s\", por %s. (Demanda: %d)\n",i+1, libro->titulo, libro->autor, libro->demanda);
+    } 
 }
+
+
+    
+
+
