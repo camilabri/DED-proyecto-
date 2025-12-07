@@ -36,6 +36,7 @@ int main() {
     int opcion;
 
     do {
+        printf("------BIBLIOTECA------\n");
         printf("1. Agregar libro\n");
         printf("2. Agregar usuario\n");
         printf("3. Prestar libro\n");
