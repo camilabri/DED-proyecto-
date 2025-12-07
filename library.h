@@ -14,13 +14,12 @@ boolean bookEquals(void *a, void *b);
 int userHash(void *t);
 boolean userEquals(void *a, void *b);
 
-void agregarLibro(); //hecho
-void agregarUsuario(); //hecho
-boolean prestarLibro ();
-boolean devolverLibro();
-void mostrarLibros (); //hecho
-void mostrarUsuarios(); //hecho
-void mostrarTopLibros ();
-
+void agregarLibro(sistema *s); //hecho
+void agregarUsuario(sistema *s); //hecho
+boolean prestarLibro (sistema *s);
+boolean devolverLibro(sistema *s);
+void mostrarLibros (sistema *s); //hecho
+void mostrarUsuarios(sistema *s); //hecho
+void mostrarTopLibros (sistema *s); //hecho
 
 #endif

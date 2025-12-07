@@ -100,9 +100,35 @@ boolean prestarLibro (sistema * s){
 //Añadir al usuario
 //Si no está disponible: meter a la cola de espera
 }
+
 boolean devolverLibro(sistema * s){
 //marcar como disponible
 //Si hay gente esperando, prestar al siguiente de la cola
+    int id;
+    char nombreUsuario[50];
+
+    printf("ID del libro a devolver: ");
+    scanf("%d", &id);
+
+    printf("Usuario que devuelve: ");
+    scanf(" %s", nombreUsuario);
+
+    //Buscamos libro
+    book *libro = (book*)map_get(s->mapaLibros, &id);
+    if (!libro){
+        printf("Libro con ID %d no existe\n",id);
+        return FALSE;
+    }
+
+    //buscamos el usuario
+    user *usuario = (user*)map_get(s->mapaUsuarios, nombreUsuario);
+    if (!usuario){
+        printf("Usuario %s no existe\n",nombreUsuario);
+        return FALSE;
+    }
+
+    //por continuar
+
 }
 
 void mostrarContenido(map *mapa, int tipo) {
