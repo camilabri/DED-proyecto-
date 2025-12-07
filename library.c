@@ -158,11 +158,20 @@ void mostrarTopLibros (sistema * s){
 
     //para hacer top 5
     int cantidad = pq_size(topLibros)>=5? 5 : pq_size(topLibros); //si son más o igual a 5 hacemos top 5, si son menos hacemos los que hayan
+
+    if(!cantidad){ //si no hay libros
+        printf("No hay libros que mostrar\n");
+        pq_free(topLibros);
+        return;
+    }
+    
     printf("\n--- TOP %d LIBROS ---\n", cantidad); 
     for(int i=0; i<cantidad; i++){
         book* libro = (book*)pq_poll(topLibros);
         printf("  %d - \"%s\", por %s. (Demanda: %d)\n",i+1, libro->titulo, libro->autor, libro->demanda);
     } 
+
+    pq_free(topLibros);
 }
 
 

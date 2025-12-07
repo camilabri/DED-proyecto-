@@ -28,4 +28,5 @@ void * pq_poll (pq *);
 TIP: Es el indice donde sigue insertar */ 
 int  pq_size (pq *); 
 
+void pq_free(pq * q);
 #endif /* PRIORITYQUEUE_H_ */

@@ -140,3 +140,9 @@ int pq_size(pq * q)
 {
   return q->size;
 }
+
+void pq_free(pq * q){
+  if(!q) return;
+  free(q->heap);
+  free(q);
+}
