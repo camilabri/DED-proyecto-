@@ -1,9 +1,9 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
 
-#include "./map.h"
-#include "./pq.h"
-#include "./queue.h"
+#include "MAP/map.h"
+#include "PQ/pq.h"
+#include "QUEUE/queue.h"
 
 typedef struct system_str sistema;
 typedef struct book_str book;
