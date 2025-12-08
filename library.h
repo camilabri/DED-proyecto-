@@ -1,5 +1,8 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "MAP/map.h"
 #include "PQ/pq.h"
@@ -14,6 +17,7 @@ boolean bookEquals(void *a, void *b);
 int userHash(void *t);
 boolean userEquals(void *a, void *b);
 
+sistema *system_create();
 void agregarLibro(sistema *s); //hecho
 void agregarUsuario(sistema *s); //hecho
 boolean prestarLibro (sistema *s);

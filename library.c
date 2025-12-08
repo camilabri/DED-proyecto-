@@ -1,7 +1,7 @@
-#include "library.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "library.h"
 
 //Revelar la estructura del mapa para poder imprimirlos (mostrarUsuarios y mostrarLibros)   
 struct node_str {

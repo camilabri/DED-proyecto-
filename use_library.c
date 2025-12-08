@@ -1,5 +1,7 @@
-#include "library.h"
+#include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include "library.h"
 
 int bookHash(void *t) 
 {
