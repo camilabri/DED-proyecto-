@@ -30,5 +30,7 @@ book* buscarLibroId(sistema* s, int id);
 book* buscarLibroTitulo(sistema* s, char* titulo);
 book** buscarLibrosAutor(sistema *s, char* autor, int* cantidad);
 void eliminarSistema(sistema* s);
+void mostrarListaEspera(sistema* s, int idLibro);
+void mostrarLibrosPrestados(sistema* s, char* username);
 
 #endif

@@ -52,11 +52,13 @@ int main() {
         printf("8. Buscar libro por titulo\n");
         printf("9. Buscar libros de un autor\n");
         printf("10. Top libros\n");
-        printf("11. SALIR\n");
+        printf("11. Ver lista de espera de un libro\n");
+        printf("12. Ver libros prestados a un usuario\n");
+        printf("13. SALIR\n");
         printf("Opcion: ");
         scanf("%d", &opcion);
 
-        if (opcion == 11) break;
+        if (opcion == 13) break;
 
         int id, idU, idL;
         char titulo[100], autor[100], nombre[50];
@@ -127,6 +129,16 @@ int main() {
 
         case 10:
             mostrarTopLibros(s);
+            break;
+
+        case 11:
+            printf("ID libro: "); scanf("%d",&idL);
+            mostrarListaEspera(s, idL);
+            break;
+
+        case 12:
+            printf("Nombre usuario: "); scanf(" %[^\n]", nombre);
+            mostrarLibrosPrestados(s, nombre);
             break;
 
         default:

@@ -290,6 +290,77 @@ book** buscarLibrosAutor(sistema *s, char* autor, int* cantidad){
     return lista;
 }
 
+void mostrarListaEspera(sistema* s, int idLibro){//muestra la lista de espera de un libro
+    if(!map_contains(s->mapaLibros, &idLibro)) {
+        printf("El libro con ID %d no existe\n", idLibro);
+        return;
+    }
+    
+    book* b = map_get(s->mapaLibros, &idLibro);
+    
+    printf("\n--- LISTA DE ESPERA: \"%s\" ---\n", b->titulo);
+    
+    if(queue_isEmpty(b->listaEspera)) {
+        printf("No hay usuarios esperando este libro.\n");
+        return;
+    }
+    
+    printf("Usuarios en espera (%d):\n", queue_size(b->listaEspera));
+    
+    //cola temporal para no destruir la original
+    queue* temp = queue_create();
+    int posicion = 1;
+    
+    //saca todos los usuarios, imprime
+    while(!queue_isEmpty(b->listaEspera)) {
+        user* u = queue_dequeue(b->listaEspera);
+        printf("  %d. %s (ID: %d)\n", posicion++, u->nombre, u->id);
+        queue_enqueue(temp, u);  //guarda en temporal
+    }
+    
+    //restaura la cola original
+    while(!queue_isEmpty(temp)) {
+        user* u = queue_dequeue(temp);
+        queue_enqueue(b->listaEspera, u);
+    }
+    
+    queue_destroy(temp);
+}
+
+//muestra libros prestados a un usuario
+void mostrarLibrosPrestados(sistema* s, char* username) {
+    if(!map_contains(s->mapaUsuarios, username)) {
+        printf("El usuario %s no existe\n", username);
+        return;
+    }
+    user* u = map_get(s->mapaUsuarios, username);
+    
+    printf("\n--- LIBROS PRESTADOS A %s ---\n", u->nombre);
+    
+    if(map_size(u->librosPrestados) == 0){
+        printf("Este usuario no tiene libros prestados.\n");
+        return;
+    }
+    
+    printf("Total de libros prestados: %d\n\n", map_size(u->librosPrestados));
+    
+    //recorrer el mapa de libros prestados
+    map* m = u->librosPrestados;
+    int contador = 1;
+    
+    for(int i = 0; i < m->M; i++) {
+        node* n = m->hashTable[i];
+        while(n){
+            book* b = (book*)n->value;
+            printf("  %d. ID: %d\n", contador++, b->id);
+            printf("     Titulo: %s\n", b->titulo);
+            printf("     Autor: %s\n", b->autor);
+            printf("     ---\n");
+            n = n->next;
+        }
+    }
+}
+
 void eliminarSistema(sistema* s){
     if (!s) return;
 
