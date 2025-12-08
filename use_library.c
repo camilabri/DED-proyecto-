@@ -1,5 +1,9 @@
 #include "library.h"
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+//para compilar: gcc use_library.c library.c MAP/map.c QUEUE/queue.c PQ/pq.c -o libreria.exe
 
 int bookHash(void *t) 
 {
@@ -28,45 +32,108 @@ int userHash(void *t) {
 boolean userEquals(void * t1, void * t2) {
   char *c1 = (char *)t1;
   char *c2 = (char *)t2;
-  printf("comparing %s with %s\n", c1, c2);
+  //printf("comparing %s with %s\n", c1, c2);
   return strcmp(c1, c2) == 0;
 }
-int main() {
-    sistema * s = system_create();
-    int opcion;
 
-    do {
-        printf("------BIBLIOTECA------\n");
+int main() {
+    int opcion;
+    sistema* s = system_create(10, 10, bookHash, userHash, bookEquals, userEquals);
+
+    while (1) {
+        printf("\n=== MENU ===\n");
         printf("1. Agregar libro\n");
         printf("2. Agregar usuario\n");
         printf("3. Prestar libro\n");
         printf("4. Devolver libro\n");
         printf("5. Mostrar libros\n");
         printf("6. Mostrar usuarios\n");
-        printf("7. Top libros\n");
-        printf("0. Salir\n");
+        printf("7. Buscar libro por ID\n");
+        printf("8. Buscar libro por titulo\n");
+        printf("9. Buscar libros de un autor\n");
+        printf("10. Top libros\n");
+        printf("11. SALIR\n");
+        printf("Opcion: ");
         scanf("%d", &opcion);
 
-        switch(opcion) {
-            case 1: agregarLibro(s);
+        if (opcion == 11) break;
+
+        int id, idU, idL;
+        char titulo[100], autor[100], nombre[50];
+
+        switch(opcion){
+        case 1:
+            printf("ID libro: "); scanf("%d",&id);
+            printf("Titulo: "); scanf(" %[^\n]", titulo);
+            printf("Autor: "); scanf(" %[^\n]", autor);
+            agregarLibro(s,id,titulo,autor);
             break;
-            case 2: agregarUsuario(s); 
-             break;
-            case 3: prestarLibro(s);
-             break;
-            case 4: devolverLibro(s);
+
+        case 2:
+            printf("ID usuario: "); scanf("%d",&id);
+            printf("Nombre: "); scanf(" %[^\n]", nombre);
+            agregarUsuario(s,id,nombre);
             break;
-            case 5: mostrarLibros (s);
+
+        case 3:
+            printf("Nombre usuario: "); scanf(" %[^\n]", nombre);
+            printf("ID libro: "); scanf("%d",&idL);
+            prestarLibro(s,nombre,idL);
             break;
-            case 6: mostrarUsuarios(s);
+
+        case 4:
+            printf("Nombre usuario: "); scanf(" %[^\n]", nombre);
+            printf("ID libro: "); scanf("%d",&idL);
+            devolverLibro(s,nombre,idL);
             break;
-            case 7: mostrarTopLibros (s);
+
+        case 5:
+            mostrarLibros(s);
             break;
-            default:
+
+        case 6:
+            mostrarUsuarios(s);
             break;
+
+        case 7:
+            printf("ID libro: "); scanf("%d",&id);
+            {
+                book* b = buscarLibroId(s,id);
+                if(b) printf("Encontrado: %s\n", getTituloLibro(b));
+                else printf("No existe\n");
+            }
+            break;
+
+        case 8:
+            printf("Titulo: "); scanf(" %[^\n]", titulo);
+            {
+                book* b = buscarLibroTitulo(s,titulo);
+                if(b) printf("Encontrado: ID %d\n", getIdLibro(b));
+                else printf("No existe\n");
+            }
+            break;
+
+        case 9:
+            printf("Autor: "); scanf(" %[^\n]", autor);
+            {
+                int cant;
+                book** lista = buscarLibrosAutor(s,autor,&cant);
+                if(!lista) { printf("No hay libros\n"); break; }
+                for(int i=0;i<cant;i++)
+                    printf("%s\n", getTituloLibro(lista[i]));
+                free(lista);
+            }
+            break;
+
+        case 10:
+            mostrarTopLibros(s);
+            break;
+
+        default:
+            printf("Opcion no valida.\n");
         }
+    }
 
-    } while(opcion != 0);
-
+    eliminarSistema(s);
     return 0;
 }

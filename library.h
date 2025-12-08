@@ -14,12 +14,21 @@ boolean bookEquals(void *a, void *b);
 int userHash(void *t);
 boolean userEquals(void *a, void *b);
 
-void agregarLibro(sistema *s); //hecho
-void agregarUsuario(sistema *s); //hecho
-boolean prestarLibro (sistema *s);
-boolean devolverLibro(sistema *s);
-void mostrarLibros (sistema *s); //hecho
-void mostrarUsuarios(sistema *s); //hecho
-void mostrarTopLibros (sistema *s); //hecho
+sistema * system_create(int M_libros, int M_users, hash_func bookHash,
+    hash_func userHash, equals_func bookEquals, equals_func userEquals);
+char* getTituloLibro(book* libro);
+char* getAutorLibro(book* libro);
+int getIdLibro(book* libro);
+void agregarLibro(sistema * s, int id, char* titulo, char* autor);
+void agregarUsuario(sistema * s, int id, char* username);
+boolean prestarLibro(sistema * s, char* username, int idLibro);
+boolean devolverLibro(sistema * s, char* username, int idLibro);
+void mostrarLibros(sistema * s);
+void mostrarUsuarios(sistema * s);
+void mostrarTopLibros(sistema * s);
+book* buscarLibroId(sistema* s, int id);
+book* buscarLibroTitulo(sistema* s, char* titulo);
+book** buscarLibrosAutor(sistema *s, char* autor, int* cantidad);
+void eliminarSistema(sistema* s);
 
 #endif

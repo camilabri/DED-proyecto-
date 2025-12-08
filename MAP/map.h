@@ -14,5 +14,6 @@ int  map_size    (map * m);
 void map_put     (map * m, void * key, void * value);
 boolean map_contains(map * m, void * key);
 void * map_get     (map * m, void * key);
-
+void * map_remove(map *m, void *key);
+void map_free(map *m);
 #endif /* MAP_H_ */

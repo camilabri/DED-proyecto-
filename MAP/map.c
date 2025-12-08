@@ -147,3 +147,73 @@ typedef struct node_str node;
     }
     return n != NULL ? n->value : NULL;
   }
+
+  /*Remueve un elemento del mapa dado su clave.
+   Retorna el valor asociado a la clave si se encontró y removió,
+   o NULL si la clave no existe en el mapa */
+void * map_remove(map *m, void *key) 
+{
+    if (!m) return NULL;
+    
+    // Calcular el bucket donde debe estar la clave
+    int bucket = m->hash(key) % m->M;
+    node *n = m->hashTable[bucket];
+    node *prev = NULL;
+    
+    // Buscar el nodo en la lista ligada
+    while(n != NULL) 
+    {
+        if(m->key_equals(n->key, key)) 
+        {
+            //se encontro, removedr nodo 
+            void *value = n->value;
+            
+            if(prev == NULL) 
+            {
+                //el nodo a remover es el primero de la lista
+                m->hashTable[bucket] = n->next;
+            } 
+            else 
+            {
+                // El nodo está en medio o al final
+                prev->next = n->next;
+            }
+            
+            free(n);  //liberar el nodo
+            m->size--;
+            return value;
+        }
+        
+        prev = n;
+        n = n->next;
+    }
+    
+    // No se encontró la clave
+    return NULL;
+}
+
+//Libera toda la memoria asociada al mapa.
+void map_free(map *m) 
+{
+    if (!m) return;
+    
+    // Recorrer todos los buckets
+    for(int i = 0; i < m->M; i++) 
+    {
+        node *n = m->hashTable[i];
+        
+        //Liberar todos los nodos de la lista ligada
+        while(n != NULL) 
+        {
+            node *temp = n;
+            n = n->next;
+            free(temp);  //solo libera el nodo, NO la clave ni el valor
+        }
+    }
+    
+    //liberar el arreglo de la tabla hash
+    free(m->hashTable);
+    
+    //liberar el struct del mapa
+    free(m);
+}
