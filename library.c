@@ -183,11 +183,19 @@ void mostrarContenido(map *mapa, int tipo) {
 }
 
 void mostrarLibros (sistema * s){
+    if(s->mapaLibros->size==0){
+        printf("No hay libros que mostrar\n");
+        return;
+    }
     printf("\n--- LIBROS ---\n");
     mostrarContenido(s->mapaLibros, 1);
 }
 
 void mostrarUsuarios(sistema * s){
+    if(s->mapaUsuarios->size==0){
+        printf("No hay usuarios que mostrar\n");
+        return;
+    }
     printf("\n--- USUARIOS ---\n");
     mostrarContenido(s->mapaUsuarios, 2);
 }
@@ -327,6 +335,6 @@ void eliminarSistema(sistema* s){
     }
     map_free(mus);
 
-    // Por último, liberar el sistema
+    //liberar el sistema
     free(s);
 }

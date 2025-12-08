@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-//para compilar: gcc use_library.c library.c MAP/map.c QUEUE/queue.c PQ/pq.c -o libreria.exe
+//para compilar: gcc use_library.c library.c MAP/map.c QUEUE/queue.c PQ/pq.c -o ejecutable
 
 int bookHash(void *t) 
 {
