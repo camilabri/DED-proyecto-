@@ -80,13 +80,15 @@ int main() {
         case 3:
             printf("Nombre usuario: "); scanf(" %[^\n]", nombre);
             printf("ID libro: "); scanf("%d",&idL);
-            prestarLibro(s,nombre,idL);
+            if(prestarLibro(s,nombre,idL)) printf("Libro prestado con exito\n");
+            else printf("Error al prestar el libro\n");
             break;
 
         case 4:
             printf("Nombre usuario: "); scanf(" %[^\n]", nombre);
             printf("ID libro: "); scanf("%d",&idL);
-            devolverLibro(s,nombre,idL);
+            if(devolverLibro(s,nombre,idL)) printf("Libro devuelto con exito\n");
+            else printf("Error al devolver el libro\n");
             break;
 
         case 5:
@@ -122,7 +124,7 @@ int main() {
                 book** lista = buscarLibrosAutor(s,autor,&cant);
                 if(!lista) { printf("No hay libros\n"); break; }
                 for(int i=0;i<cant;i++)
-                    printf("%s\n", getTituloLibro(lista[i]));
+                    printf("%s, ID: %d\n", getTituloLibro(lista[i]),getIdLibro(lista[i]));
                 free(lista);
             }
             break;

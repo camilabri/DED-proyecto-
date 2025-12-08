@@ -63,16 +63,16 @@ typedef struct node_str node;
     /* get bucket number to insert */
     int hashcode = m->hash(key);
     int bucket = hashcode % m->M;
-    printf("map_put: hashing key = %d\n", hashcode);
-    printf("map_put: bucket = hash mod %d = %d\n", m->M, bucket);
+    //printf("map_put: hashing key = %d\n", hashcode);
+    //printf("map_put: bucket = hash mod %d = %d\n", m->M, bucket);
    
     node * n = m->hashTable[bucket];
-    printf("map_put:start, looking in bucket %d\n", bucket);
+    //printf("map_put:start, looking in bucket %d\n", bucket);
 
     if(m->hashTable[bucket] == NULL) 
     {
       /* case: the bucket is empty, no elements in the list */
-      printf("map_put: List is NULL, creating first node at bucket %d\n", bucket);
+      //printf("map_put: List is NULL, creating first node at bucket %d\n", bucket);
       m->hashTable[bucket] = createNode(key, value);
       m->size ++;
       return;
@@ -86,14 +86,14 @@ typedef struct node_str node;
       if(m->key_equals(key, n->key))
       { 
         /* Update value (overwrites) and return */
-        printf("map_put: Found, update!\n");
+        //printf("map_put: Found, update!\n");
         n->value = value;
         return;
       }
       else
       {
         /* not in this node? continue with the next */
-        printf("map_put: Not here, keep searching\n");
+        //printf("map_put: Not here, keep searching\n");
         n = n->next;
       }
     }
@@ -102,7 +102,7 @@ typedef struct node_str node;
       finding our key, so lets insert a new one, lets put it in the header
       of the list */
 
-    printf("map_put:key not found create new node\n");
+    //printf("map_put:key not found create new node\n");
     node * new = createNode(key, value);
     new->next = m->hashTable[bucket];
     m->hashTable[bucket] = new;
