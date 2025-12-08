@@ -1,5 +1,7 @@
-#include "queue.h"
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "queue.h"
 
 /* Queues (Colas) */
 struct node_str {

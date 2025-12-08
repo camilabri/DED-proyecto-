@@ -1,6 +1,7 @@
-#include "map.h"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "map.h"
   
 struct node_str {
     void * key, * value;
